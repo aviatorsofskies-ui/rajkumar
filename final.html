@@ -1,0 +1,189 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<div id="cursorGlow">
+<title>Rajkumar's Website </title>
+</div>
+
+<style>
+*{margin:0;padding:0;box-sizing:border-box;font-family:'Segoe UI',sans-serif}
+body{background:#000;color:#f5e6c8;overflow-x:hidden}
+canvas{position:fixed;top:0;left:0;z-index:-2}
+
+/* NEW TOUCH GLOW EFFECT */
+.touch-glow{
+ position:fixed;
+ width:150px;
+ height:150px;
+ border-radius:50%;
+ pointer-events:none;
+ background:radial-gradient(circle, rgba(255,215,0,0.8) 0%, rgba(255,215,0,0.3) 40%, transparent 70%);
+ transform:translate(-50%,-50%) scale(0.5);
+ animation:glowFade 0.6s ease-out forwards;
+ z-index:9999;
+ mix-blend-mode:screen;
+}
+
+@keyframes glowFade{
+ 0%{opacity:1;transform:translate(-50%,-50%) scale(0.5);}
+ 100%{opacity:0;transform:translate(-50%,-50%) scale(1.8);}
+}
+
+nav{position:fixed;top:0;width:100%;display:flex;justify-content:center;gap:40px;padding:18px;background:rgba(0,0,0,.7);backdrop-filter:blur(12px);z-index:10}
+nav a{color:#fff;text-decoration:none;transition:.4s}
+nav a:hover{color:gold;text-shadow:0 0 20px gold,0 0 40px gold;transform:scale(1.1)}
+
+.page{opacity:0;transform:translateY(40px);transition:1s}
+.page.show{opacity:1;transform:translateY(0)}
+
+header{height:100vh;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center}
+
+h1{color:gold;font-size:4rem}
+.profile{width:150px;height:150px;border-radius:50%;border:2px solid gold;margin-top:15px}
+
+section{padding:100px 20px;max-width:1000px;margin:auto}
+.card{background:#111;padding:35px;border-radius:15px;border:1px solid rgba(255,215,0,.3)}
+
+footer{text-align:center;padding:30px}
+
+.social-header{display:flex;justify-content:center;gap:25px;margin-bottom:10px}
+.social-header a{display:flex;align-items:center;gap:10px;color:#fff;text-decoration:none;font-weight:bold;transition:.4s}
+.social-header img{width:28px}
+.social-header a:hover{color:gold;text-shadow:0 0 20px gold;transform:scale(1.1)}
+
+</style>
+</head>
+<body>
+<canvas id="bg"></canvas>
+<div id="cursorGlow">
+<nav>
+<a href="#">Home</a>
+<a href="#about">About</a>
+<a href="#contact">Contact</a>
+</nav>
+</div>
+<header class="page">
+<h1>Rajkumar Talada </h1>
+<img src="profile.jpg" class="profile">
+</header>
+
+<section id="about" class="page">
+<div class="card">
+<h2>About Me</h2>
+<p>
+I am an individual driven by an enduring fascination for aviation—a field that, to me, represents not merely technology, but the pinnacle of human ambition and precision. From a young age, I found myself captivated by the elegance of flight, the intricate engineering behind aircraft, and the discipline required to master the skies. This passion has evolved into a defining aspect of my identity, shaping both my aspirations and my outlook on life.
+<br><br>
+What draws me most to aviation is its seamless blend of science, responsibility, and innovation. It demands not only technical expertise but also clarity of thought, composure under pressure, and an unwavering commitment to excellence—qualities I continuously strive to cultivate within myself. I am deeply inspired by the idea that aviation connects the world, transcending boundaries and bringing people closer together, both physically and culturally.
+<br><br>
+Beyond my interest in aviation, I consider myself a lifelong learner, constantly seeking opportunities to expand my knowledge and refine my skills. I approach challenges with determination and view every obstacle as a chance to grow stronger and wiser. My mindset is grounded in discipline, curiosity, and the desire to achieve meaningful progress.
+<br><br>
+In essence, I am not just passionate about aviation—I am committed to embodying the values it represents: precision, perseverance, and purpose. I aspire to channel this passion into a future where I can contribute, excel, and make a lasting impact in the field I admire so profoundly.
+</p>
+</div>
+</section>
+
+<section id="contact" class="page">
+<div class="card">
+<h2>Contact</h2>
+<p>
+<strong>Contact Details</strong>
+<br><br>
+I welcome professional connections, collaborations, and meaningful engagements. Please feel free to reach out to me through the following channels:
+<br><br>
+<strong>Email:</strong> <a href="mailto:aviatorsofskies@gmail.com" style="color:gold">aviatorsofskies@gmail.com</a><br>
+<strong>Phone:</strong> +91 9553422223<br>
+<strong>LinkedIn:</strong> <a href="http://www.linkedin.com/in/talada-rajkumar-81855b3ba" target="_blank" style="color:gold">www.linkedin.com/in/talada-rajkumar-81855b3ba</a><br>
+<strong>Location:</strong> Visakhapatnam, Andhra Pradesh, India
+<br><br>
+I remain open to opportunities that foster growth, innovation, and impactful contributions. I look forward to connecting with individuals and organizations who share a vision for excellence.
+</p>
+</div>
+</section>
+
+<footer class="page">
+<div class="social-header">
+  <a href="https://instagram.com/aviatorsofskies" target="_blank">
+    <img src="https://cdn-icons-png.flaticon.com/512/2111/2111463.png"> aviatorsofskies
+  </a>
+  <a href="https://youtube.com/@aviator_raj" target="_blank">
+    <img src="https://cdn-icons-png.flaticon.com/512/1384/1384060.png"> aviator_raj
+  </a>
+</div>
+<p>© 2026 Rajkumar</p>
+</footer>
+
+<script>
+const c=document.getElementById('bg');
+const ctx=c.getContext('2d');
+c.width=innerWidth;c.height=innerHeight;
+
+let stars=[];
+for(let i=0;i<200;i++){
+ stars.push({x:Math.random()*c.width,y:Math.random()*c.height,s:Math.random()*2});
+}
+
+function draw(){
+ ctx.fillStyle='rgba(0,0,0,0.4)';
+ ctx.fillRect(0,0,c.width,c.height);
+ stars.forEach(s=>{
+  ctx.fillStyle='white';
+  ctx.beginPath();
+  ctx.arc(s.x,s.y,s.s,0,Math.PI*2);
+  ctx.fill();
+  s.y+=s.s;
+  if(s.y>c.height){s.y=0;s.x=Math.random()*c.width}
+ });
+ requestAnimationFrame(draw);
+}
+draw();
+
+// CLICK / TOUCH GLOW EFFECT
+function createGlow(x, y){
+ const glow = document.createElement("div");
+ glow.className = "touch-glow";
+ glow.style.left = x + "px";
+ glow.style.top = y + "px";
+ document.body.appendChild(glow);
+
+ setTimeout(() => glow.remove(), 600);
+}
+
+document.addEventListener("click", e => {
+ createGlow(e.clientX, e.clientY);
+});
+
+document.addEventListener("touchstart", e => {
+ const touch = e.touches[0];
+ createGlow(touch.clientX, touch.clientY);
+});
+
+// reveal animation
+const obs=new IntersectionObserver(e=>{
+ e.forEach(x=>{if(x.isIntersecting)x.target.classList.add('show')});
+});
+document.querySelectorAll('.page').forEach(el=>obs.observe(el));
+
+
+
+// SMOOTH CURSOR GLOW FOLLOW
+const cursorGlow = document.getElementById("cursorGlow");
+
+document.addEventListener("mousemove", (e) => {
+ cursorGlow.style.left = e.clientX + "px";
+ cursorGlow.style.top = e.clientY + "px";
+});
+
+// MOBILE TOUCH FOLLOW
+document.addEventListener("touchmove", (e) => {
+ const touch = e.touches[0];
+ cursorGlow.style.left = touch.clientX + "px";
+ cursorGlow.style.top = touch.clientY + "px";
+});
+
+
+</script>
+
+</body>
+</html>
